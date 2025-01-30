@@ -13,7 +13,7 @@ pipeline {
 
             steps {
 
-                sshCommand remote: [host: REMOTE_HOST, user: REMOTE_USER, credentialsId: SSH_CREDENTIALS], command: '''
+                sshCommand remote: [ name: name,host: REMOTE_HOST, user: REMOTE_USER, credentialsId: SSH_CREDENTIALS], command: '''
                     echo "Connected to $(hostname)"
                     uname -a
                 '''
