@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        name: 'PWDServer',
         REMOTE_USER = 'ip172-18-0-55-cudenci91nsg008rquk0'
         REMOTE_HOST = 'direct.labs.play-with-docker.com'
         SSH_CREDENTIALS = 'docker_pg'  // This is the ID from Jenkins credentials
@@ -10,14 +9,19 @@ pipeline {
 
     stages {
         stage('Build') {
-
             steps {
-
-                sshCommand remote: [ name: 'PWDServer', host: REMOTE_HOST, user: REMOTE_USER, credentialsId: SSH_CREDENTIALS], command: '''
+                // SSH Command to check connection and perform initial commands on the remote server
+                sshCommand remote: [
+                    name: 'PWDServer',  // This should be here, not in environment block
+                    host: REMOTE_HOST,
+                    user: REMOTE_USER,
+                    credentialsId: SSH_CREDENTIALS
+                ], command: '''
                     echo "Connected to $(hostname)"
                     uname -a
                 '''
-
+                
+                // Build the project using npm and Docker commands locally
                 sh '''
                 ls -la
                 node --version
