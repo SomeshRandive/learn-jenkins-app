@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        name: 'PWD Server',
+        name: 'ip172-18-0-55-cudenci91nsg008rquk0',
         REMOTE_USER = 'ip172-18-0-55-cudenci91nsg008rquk0'
         REMOTE_HOST = 'direct.labs.play-with-docker.com'
-        SSH_CREDENTIALS = 'pwd-ssh'  // This is the ID from Jenkins credentials
+        SSH_CREDENTIALS = 'docker_pg'  // This is the ID from Jenkins credentials
     }
 
     stages {
