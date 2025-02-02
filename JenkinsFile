@@ -25,7 +25,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg', keyFileVariable: 'SSH_KEY')]) {
                     sh """
                         # Now you can use the SSH key to connect to your remote Docker Playground server
-                        ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY user@direct.labs.play-with-docker.com 'command-to-run'
+                        ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ip172-18-0-87-cufhkrq91nsg0096tg80@direct.labs.play-with-docker.com 'command-to-run'
                     """
                 
                 // SSH command with verbose debugging
