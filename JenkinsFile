@@ -22,13 +22,14 @@ pipeline {
                 sh  'whoami'
 
 
+                // below block works pretty good.
                 // SSH to remote server using the private key from Jenkins credentials
-                withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg_global', keyFileVariable: 'SSH_KEY')]) {
-                    sh """
-                        ssh -v -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch ~/somesh
-'
-                    """
-                }
+//                 withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg_global', keyFileVariable: 'SSH_KEY')]) {
+//                     sh """
+//                         ssh -v -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch ~/somesh
+// '
+//                     """
+//                 }
                     // Run the SSH command using the private key
                     // sh "ssh -v -o PubkeyAcceptedKeyTypes=ssh-rsa -i ${env.SSH_KEY} ${REMOTE_USER}@${REMOTE_HOST} 'command-to-run'"
 
@@ -48,26 +49,25 @@ pipeline {
                 //     """
                 // }
                 // SSH command with verbose debugging
-                sh ''' 
-                    ssh-keyscan -H ${REMOTE_HOST} >> ~/.ssh/known_hosts 
-                    ssh -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i /var/jenkins_home/.ssh/id_rsa ip172-18-0-18-cufe3v8l2o9000dbi2o0@direct.labs.play-with-docker.com
-                    ssh -vvv -i ${JENKINS_HOME}/.ssh/id_rsa ${REMOTE_USER}@${REMOTE_HOST} 'echo "Connected to Jenkins"; uname -a'
-                '''
+                // sh ''' 
+                //     ssh-keyscan -H ${REMOTE_HOST} >> ~/.ssh/known_hosts 
+                //     ssh -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i /var/jenkins_home/.ssh/id_rsa ip172-18-0-18-cufe3v8l2o9000dbi2o0@direct.labs.play-with-docker.com
+                //     ssh -vvv -i ${JENKINS_HOME}/.ssh/id_rsa ${REMOTE_USER}@${REMOTE_HOST} 'echo "Connected to Jenkins"; uname -a'
+                // '''
 
                 // // SSH Command to check connection and perform initial commands on the remote server
-                // sshCommand remote: [
-                //     name: 'PWDServer',  // This should be here, not in environment block
-                //     host: REMOTE_HOST,
-                //     user: REMOTE_USER,
-                //     credentialsId: SSH_CREDENTIALS,
-                //     knownHosts: '/var/jenkins_home/.ssh/known_hosts'
-                // ], command: '''
-                //     echo "Jenkins Home: ${JENKINS_HOME}"
-                //     sh 'env'
-                //     echo "Hello from Jenkins"
-                //     ssh -vvv -o PubkeyAcceptedKeyTypes=ssh-rsa $(whoami)@$(hostname)
-                //     uname -a
-                // '''
+                sshCommand remote: [
+                    name: 'PWDServer',  // This should be here, not in environment block
+                    host: REMOTE_HOST,
+                    user: REMOTE_USER,
+                    credentialsId: SSH_CREDENTIALS,
+                    knownHosts: '/var/jenkins_home/.ssh/known_hosts'
+                ], command: '''
+                    echo "Jenkins Home: ${JENKINS_HOME}"
+                    sh 'env'
+                    echo "Hello from Jenkins"
+                    uname -a
+                '''
                 
                 // Build the project using npm and Docker commands locally
                 sh '''
