@@ -21,10 +21,12 @@ pipeline {
                 echo "SSH Key: ${env.SSH_KEY}"
 
 
-                withCredentials([sshUserPrivateKey(credentialsId: 'your-ssh-key-id', keyFileVariable: 'SSH_KEY')]) {
-                    sh "ssh -v -o PubkeyAcceptedKeyTypes=ssh-rsa -i ${SSH_KEY} ip172-18-0-87-cufhkrq91nsg0096tg80@direct.labs.play-with-docker.com 'command-to-run'"
+                // Use SSH credentials for the connection
+                withCredentials([sshUserPrivateKey(credentialsId: SSH_CREDENTIALS, keyFileVariable: 'SSH_KEY')]) {
+                    // Ensure the key is available and then run the SSH command
+                    echo "Using SSH Key: ${SSH_KEY}"
+                    sh "ssh -v -o PubkeyAcceptedKeyTypes=ssh-rsa -i ${SSH_KEY} ${REMOTE_USER}@${REMOTE_HOST} 'command-to-run'"
                 }
-
 
 
                 //  // Use the SSH Agent with the credential ID from Jenkins
