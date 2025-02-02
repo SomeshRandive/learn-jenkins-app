@@ -11,36 +11,30 @@ pipeline {
         stage('Build') {
             steps {
 
-                // echo "Jenkins Home: ${JENKINS_HOME}"
-                // sh 'env'
-                // sh 'ssh-keyscan -H direct.labs.play-with-docker.com >> /var/jenkins_home/.ssh/known_hosts'
-
+                // Echo basic information about the environment and remote server
                 echo "Jenkins Home: ${JENKINS_HOME}"
                 echo "Remote Host: ${REMOTE_HOST}"
                 echo "Remote User: ${REMOTE_USER}"
-                echo "SSH Key: ${env.SSH_KEY}"
+
+                // Check if Jenkins can access the environment and the remote server
                 sh  'whoami'
 
-
-                // below block works pretty good.
-                // SSH to remote server using the private key from Jenkins credentials
-//                 withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg_global', keyFileVariable: 'SSH_KEY')]) {
+//              withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg_global', keyFileVariable: 'SSH_KEY')]) {
 //                     sh """
 //                         ssh -v -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch ~/somesh
 // '
 //                     """
 //                 }
-                // // SSH Command to check connection and perform initial commands on the remote server
+
+                // SSH Command to check connection and perform initial commands on the remote server
                 sshCommand remote: [
-                    name: 'PWDServer',  // This should be here, not in environment block
+                    name: 'PWDServer',  // This should be here, not in the environment block
                     host: REMOTE_HOST,
                     user: REMOTE_USER,
                     credentialsId: SSH_CREDENTIALS,
                     knownHosts: '/var/jenkins_home/.ssh/known_hosts',
                     useAgent: true  // Ensure SSH agent is used for authentication
                 ], command: '''
-                    echo "Jenkins Home: ${JENKINS_HOME}"
-                    sh 'env'
                     echo "Hello from Jenkins"
                     uname -a
                 '''
