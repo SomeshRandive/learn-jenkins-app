@@ -18,6 +18,8 @@ pipeline {
                     credentialsId: SSH_CREDENTIALS,
                     knownHosts: '/var/jenkins_home/.ssh/known_hosts'
                 ], command: '''
+                echo "Jenkins Home: ${JENKINS_HOME}"
+                sh 'env'
                 echo "Hello from Jenkins"
                     uname -a
                 '''
