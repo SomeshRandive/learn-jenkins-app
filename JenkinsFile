@@ -21,7 +21,7 @@ pipeline {
 
              withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg_global', keyFileVariable: 'SSH_KEY')]) {
                     sh """
-                        ssh -v -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch ~/somesh_m'
+                        ssh -v -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch /tmp/somesh_m'
                     """
                 }
 
