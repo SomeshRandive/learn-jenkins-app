@@ -10,6 +10,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+
+
+                sh 'ssh-keyscan -H direct.labs.play-with-docker.com >> /var/jenkins_home/.ssh/known_hosts'
+
+
                 // SSH Command to check connection and perform initial commands on the remote server
                 sshCommand remote: [
                     name: 'PWDServer',  // This should be here, not in environment block
