@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REMOTE_USER = ' ip172-18-0-18-cufe3v8l2o9000dbi2o0'
+        REMOTE_USER = 'ip172-18-0-18-cufe3v8l2o9000dbi2o0'
         REMOTE_HOST = 'direct.labs.play-with-docker.com'
         SSH_CREDENTIALS = 'docker_pg'  // This is the ID from Jenkins credentials
     }
