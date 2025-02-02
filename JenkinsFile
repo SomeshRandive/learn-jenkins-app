@@ -19,6 +19,7 @@ pipeline {
                 echo "Remote Host: ${REMOTE_HOST}"
                 echo "Remote User: ${REMOTE_USER}"
                 echo "SSH Key: ${env.SSH_KEY}"
+                sh  'whoami
 
                     // Run the SSH command using the private key
                     sh "ssh -v -o PubkeyAcceptedKeyTypes=ssh-rsa -i ${env.SSH_KEY} ${REMOTE_USER}@${REMOTE_HOST} 'command-to-run'"
