@@ -15,7 +15,8 @@ pipeline {
                     name: 'PWDServer',  // This should be here, not in environment block
                     host: REMOTE_HOST,
                     user: REMOTE_USER,
-                    credentialsId: SSH_CREDENTIALS
+                    credentialsId: SSH_CREDENTIALS,
+                    knownHosts: '/var/jenkins_home/.ssh/known_hosts'
                 ], command: '''
                     echo "Connected to $(hostname)"
                     uname -a
