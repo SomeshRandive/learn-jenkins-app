@@ -22,7 +22,7 @@ pipeline {
                 // SSH command with verbose debugging
                 sh ''' 
                     ssh-keyscan -H ${REMOTE_HOST} >> ~/.ssh/known_hosts 
-                    ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i /var/jenkins_home/.ssh/id_rsa ip172-18-0-18-cufe3v8l2o9000dbi2o0@direct.labs.play-with-docker.com
+                    ssh -t -o PubkeyAcceptedKeyTypes=ssh-rsa -i /var/jenkins_home/.ssh/id_rsa ip172-18-0-18-cufe3v8l2o9000dbi2o0@direct.labs.play-with-docker.com
                     ssh -vvv -i ${JENKINS_HOME}/.ssh/id_rsa ${REMOTE_USER}@${REMOTE_HOST} 'echo "Connected to Jenkins"; uname -a'
                 '''
 
