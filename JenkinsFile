@@ -25,7 +25,8 @@ pipeline {
                 // SSH to remote server using the private key from Jenkins credentials
                 withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg_global', keyFileVariable: 'SSH_KEY')]) {
                     sh """
-                        ssh -v -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch /path/to/directory/somesh'
+                        ssh -v -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY ${REMOTE_USER}@${REMOTE_HOST} 'touch ~/somesh
+'
                     """
                 }
                     // Run the SSH command using the private key
