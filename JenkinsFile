@@ -18,6 +18,15 @@ pipeline {
                 echo "Jenkins Home: ${JENKINS_HOME}"
                 echo "Remote Host: ${REMOTE_HOST}"
                 echo "Remote User: ${REMOTE_USER}"
+
+
+
+                 // Use the SSH Agent with the credential ID from Jenkins
+                withCredentials([sshUserPrivateKey(credentialsId: 'docker_pg', keyFileVariable: 'SSH_KEY')]) {
+                    sh """
+                        # Now you can use the SSH key to connect to your remote Docker Playground server
+                        ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i \$SSH_KEY user@direct.labs.play-with-docker.com 'command-to-run'
+                    """
                 
                 // SSH command with verbose debugging
                 sh ''' 
