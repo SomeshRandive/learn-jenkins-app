@@ -11,7 +11,8 @@ pipeline {
         stage('Build') {
             steps {
 
-
+                echo "Jenkins Home: ${JENKINS_HOME}"
+                sh 'env'
                 sh 'ssh-keyscan -H direct.labs.play-with-docker.com >> /var/jenkins_home/.ssh/known_hosts'
 
 
